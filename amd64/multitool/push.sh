@@ -6,9 +6,9 @@ HOST='docker.io'
 NAMESPACE='kepocnhh'
 
 ISSUER='multitool'
-ISSUER_VERSION='0.10.0'
+ISSUER_VERSION='0.11.0'
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION=1000
+IMAGE_VERSION=1100
 IMAGE_FLAVOR='d'
 IMAGE_TAG="${IMAGE_VERSION}${IMAGE_FLAVOR}"
 IMAGE_NAME="${HOST}/${NAMESPACE}/${REPOSITORY}:${IMAGE_TAG}"
@@ -78,12 +78,12 @@ for it in \
  '$mt/bash/check.sh' \
  '$mt/checks/one_of.sh 1 2 1' \
  'echo foobarbaz > /tmp/foo.txt' \
- '$mt/secrets/sha1.sh /tmp/foo.txt' \
- 'cat /tmp/foo.txt.sha1' \
- '$mt/secrets/md5.sh /tmp/foo.txt' \
- 'cat /tmp/foo.txt.md5' \
- '$mt/secrets/sha256.sh /tmp/foo.txt' \
- 'cat /tmp/foo.txt.sha256'; do
+ '$mt/hashes/assemble.sh /tmp/foo.txt /tmp/foo-hashes.txt' \
+ 'cat /tmp/foo.txt.md5 | xxd -p -c 64' \
+ 'cat /tmp/foo.txt.sha1 | xxd -p -c 64' \
+ 'cat /tmp/foo.txt.sha256 | xxd -p -c 64' \
+ 'cat /tmp/foo.txt.sha512 | xxd -p -c 128' \
+ 'cat /tmp/foo-hashes.txt'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "${it}"
  if test $? -ne 0; then echo 'Exec error!'; exit 1; fi
 done
