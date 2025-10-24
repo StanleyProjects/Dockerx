@@ -105,7 +105,7 @@ done
 docker stop "${CONTAINER_NAME}"
 docker rm -f "${CONTAINER_NAME}"
 
-echo "Push to Docker repository?"
+echo "Push \"${IMAGE_NAME}\" to Docker repository?"
 read -r YES_OR_NOT
 
 if test "${YES_OR_NOT}" == 'yes'; then
@@ -114,7 +114,7 @@ if test "${YES_OR_NOT}" == 'yes'; then
  echo "Docker image ${IMAGE_NAME} pushed."
 fi
 
-echo "Push to GIT repository?"
+echo "Push \"${REPOSITORY}:${IMAGE_TAG}\" to GIT repository?"
 read -r YES_OR_NOT
 
 if test "${YES_OR_NOT}" == 'yes'; then
