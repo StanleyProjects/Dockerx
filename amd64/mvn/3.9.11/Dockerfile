@@ -1,4 +1,4 @@
-from docker.io/kepocnhh/gradle-8.10.2-amd64:8d
+from docker.io/kepocnhh/android-20251024-amd64:1d
 
 env MAVEN_VERSION='3.9.11'
 env MAVEN_HOME="/opt/apache-maven-${MAVEN_VERSION}"
