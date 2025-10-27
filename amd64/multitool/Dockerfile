@@ -1,8 +1,8 @@
-from docker.io/kepocnhh/mvn-3.9.11-amd64:3d
+from docker.io/kepocnhh/mvn-3.9.11-amd64:4d
 
 workdir /workdir
 
-env MULTITOOL_VERSION='0.11.3'
+env MULTITOOL_VERSION='0.12.0'
 env MULTITOOL_HOME="/opt/Multitool-${MULTITOOL_VERSION}"
 env mt="${MULTITOOL_HOME}/src/main/bash"
 

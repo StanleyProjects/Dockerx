@@ -6,9 +6,9 @@ HOST='docker.io'
 NAMESPACE='kepocnhh'
 
 ISSUER='multitool'
-ISSUER_VERSION='0.11.3'
+ISSUER_VERSION='0.12.0'
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION=1103
+IMAGE_VERSION=1200
 IMAGE_FLAVOR='d'
 IMAGE_TAG="${IMAGE_VERSION}${IMAGE_FLAVOR}"
 IMAGE_NAME="${HOST}/${NAMESPACE}/${REPOSITORY}:${IMAGE_TAG}"
@@ -91,7 +91,7 @@ done
 docker stop "${CONTAINER_NAME}"
 docker rm -f "${CONTAINER_NAME}"
 
-echo "Push to Docker repository?"
+echo "Push \"${IMAGE_NAME}\" to Docker repository?"
 read -r YES_OR_NOT
 
 if test "${YES_OR_NOT}" == 'yes'; then
@@ -100,7 +100,7 @@ if test "${YES_OR_NOT}" == 'yes'; then
  echo "Docker image ${IMAGE_NAME} pushed."
 fi
 
-echo "Push to GIT repository?"
+echo "Push \"${REPOSITORY}:${IMAGE_TAG}\" to GIT repository?"
 read -r YES_OR_NOT
 
 if test "${YES_OR_NOT}" == 'yes'; then
