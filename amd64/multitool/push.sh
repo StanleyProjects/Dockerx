@@ -6,7 +6,7 @@ HOST='docker.io'
 NAMESPACE='kepocnhh'
 
 ISSUER='multitool'
-ISSUER_VERSION='0.13.0'
+ISSUER_VERSION='0.13.1'
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
 IMAGE_VERSION_CODE=1
 IMAGE_FLAVOR='a'
@@ -78,12 +78,14 @@ for it in \
  '$mt/bash/check.sh' \
  '$mt/checks/one_of.sh 1 2 1' \
  'echo foobarbaz > /tmp/foo.txt' \
- '$mt/hashes/assemble.sh /tmp/foo.txt /tmp/foo-hashes.txt' \
+ '$mt/hashes/md5.sh /tmp/foo.txt' \
  'cat /tmp/foo.txt.md5 | xxd -p -c 64' \
+ '$mt/hashes/sha1.sh /tmp/foo.txt' \
  'cat /tmp/foo.txt.sha1 | xxd -p -c 64' \
+ '$mt/hashes/sha256.sh /tmp/foo.txt' \
  'cat /tmp/foo.txt.sha256 | xxd -p -c 64' \
- 'cat /tmp/foo.txt.sha512 | xxd -p -c 128' \
- 'cat /tmp/foo-hashes.txt'; do
+ '$mt/hashes/sha512.sh /tmp/foo.txt' \
+ 'cat /tmp/foo.txt.sha512 | xxd -p -c 128'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "${it}"
  if test $? -ne 0; then echo 'Exec error!'; exit 1; fi
 done
