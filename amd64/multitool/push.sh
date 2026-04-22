@@ -6,16 +6,15 @@ HOST='docker.io'
 NAMESPACE='kepocnhh'
 
 ISSUER='multitool'
-ISSUER_VERSION='0.12.0'
+ISSUER_VERSION='0.13.0'
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
 IMAGE_VERSION_CODE=1
-IMAGE_VERSION="${ISSUER_VERSION}.${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
-IMAGE_TAG="${IMAGE_VERSION}${IMAGE_FLAVOR}"
+IMAGE_TAG="${IMAGE_VERSION_CODE}${IMAGE_FLAVOR}"
 IMAGE_NAME="${HOST}/${NAMESPACE}/${REPOSITORY}:${IMAGE_TAG}"
 
 docker build --no-cache \
- -f "${ARCH}/${ISSUER}/${ISSUER_VERSION}/Dockerfile" \
+ -f "${ARCH}/${ISSUER}/Dockerfile" \
  --platform="${PLATFORM}" -t "${IMAGE_NAME}" .
 
 if test $? -ne 0; then echo "Build error!"; exit 21; fi
@@ -44,7 +43,7 @@ docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c \
  "test \"\${MULTITOOL_VERSION}\" == \"${ISSUER_VERSION}\""
 if test $? -ne 0; then echo 'Version error!'; exit 1; fi
 
-docker cp "${ARCH}/${ISSUER}/${ISSUER_VERSION}/key.pgp" "${CONTAINER_NAME}:/tmp/key.pgp"
+docker cp "${ARCH}/${ISSUER}/key.pgp" "${CONTAINER_NAME}:/tmp/key.pgp"
 if test $? -ne 0; then echo 'Copy error!'; exit 1; fi
 
 for it in \
