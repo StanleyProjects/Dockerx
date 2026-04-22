@@ -6,7 +6,7 @@ HOST='docker.io'
 NAMESPACE='kepocnhh'
 
 ISSUER='multitool'
-ISSUER_VERSION='0.13.3'
+ISSUER_VERSION='0.14.0'
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
 IMAGE_VERSION_CODE=1
 IMAGE_FLAVOR='a'
@@ -80,8 +80,10 @@ for it in \
  'echo foobarbaz > /tmp/foo.txt' \
  '$mt/hashes/md5.sh /tmp/foo.txt' \
  'cat /tmp/foo.txt.md5 | xxd -p -c 64' \
+ 'rm /tmp/foo.txt.md5; $mt/hashes/hex/md5.sh /tmp/foo.txt && cat /tmp/foo.txt.md5' \
  '$mt/hashes/sha1.sh /tmp/foo.txt' \
  'cat /tmp/foo.txt.sha1 | xxd -p -c 64' \
+ 'rm /tmp/foo.txt.sha1; $mt/hashes/hex/sha1.sh /tmp/foo.txt && cat /tmp/foo.txt.sha1' \
  '$mt/hashes/sha256.sh /tmp/foo.txt' \
  'cat /tmp/foo.txt.sha256 | xxd -p -c 64' \
  '$mt/hashes/sha512.sh /tmp/foo.txt' \
