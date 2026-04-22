@@ -1,4 +1,4 @@
-from docker.io/kepocnhh/gradle-8.10.2-amd64:8d
+from docker.io/kepocnhh/gradle-8.14.3-amd64:8.14.3.1a
 
 env ANDROID_ROOT='/opt/android'
 env ANDROID_SDK_ROOT="${ANDROID_ROOT}/sdk"
