@@ -1,4 +1,4 @@
-from docker.io/kepocnhh/mvn-3.9.11-amd64:4d
+from docker.io/kepocnhh/mvn-3.9.15-amd64:3.9.15.1a
 
 workdir /workdir
 
