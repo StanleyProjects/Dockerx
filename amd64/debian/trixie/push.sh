@@ -7,7 +7,7 @@ NAMESPACE='kepocnhh'
 ISSUER='debian'
 ISSUER_VERSION='trixie'
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION=10
+IMAGE_VERSION=11
 IMAGE_FLAVOR='a'
 IMAGE_TAG="${IMAGE_VERSION}${IMAGE_FLAVOR}"
 IMAGE_NAME="${HOST}/${NAMESPACE}/${REPOSITORY}:${IMAGE_TAG}"
@@ -46,6 +46,7 @@ for it in \
  'git -C ./Dockerx status' \
  'echo "foo" | openssl dgst -sha256 -binary | xxd -p -c 64' \
  'cat ./Dockerx/README.md' \
+ 'file --version' \
  '/usr/local/bin/bash --version'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "$it"
  if test $? -ne 0; then echo 'Exec error!'; exit 1; fi

@@ -1,4 +1,4 @@
-from docker.io/amd64/debian:trixie-20260421-slim
+from docker.io/amd64/debian:trixie-20260505-slim
 
 run echo 'deb http://deb.debian.org/debian trixie main' > /etc/apt/sources.list; \
  echo 'deb http://deb.debian.org/debian trixie-updates main' >> /etc/apt/sources.list; \
@@ -45,5 +45,8 @@ run echo '#!/usr/local/bin/bash' > /usr/local/bin/gpgloopback.sh; \
  echo 'if test -z "${GPG_PASSWORD}"; then echo "No password!"; exit 1; fi' >> /usr/local/bin/gpgloopback.sh; \
  echo 'gpg --pinentry-mode loopback --passphrase "${GPG_PASSWORD}" $@' >> /usr/local/bin/gpgloopback.sh; \
  chmod +x /usr/local/bin/gpgloopback.sh
+
+run apt-get install --no-install-recommends -y file \
+ && file --version
 
 run echo 'a' > /etc/flavor
