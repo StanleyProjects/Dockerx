@@ -12,3 +12,11 @@ run curl -L "https://github.com/StanleyProjects/Multitool/archive/refs/tags/${MU
 env PATH="${PATH}:${MULTITOOL_HOME}"
 
 run mkdir .mt
+
+env ASSERTS_VERSION='0.0.8'
+env ASSERTS_HOME="/opt/Asserts-${ASSERTS_VERSION}"
+env asserts="${ASSERTS_HOME}/src/main/bash"
+
+run TMP_PATH="$(mktemp)"; \
+ curl -L "https://github.com/StanleyProjects/Asserts/releases/download/${ASSERTS_VERSION}/Asserts-${ASSERTS_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Asserts-${ASSERTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"

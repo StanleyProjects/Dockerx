@@ -8,7 +8,7 @@ NAMESPACE='kepocnhh'
 ISSUER='multitool'
 ISSUER_VERSION='0.14.0'
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION_CODE=1
+IMAGE_VERSION_CODE=2
 IMAGE_FLAVOR='a'
 IMAGE_TAG="${IMAGE_VERSION_CODE}${IMAGE_FLAVOR}"
 IMAGE_NAME="${HOST}/${NAMESPACE}/${REPOSITORY}:${IMAGE_TAG}"
@@ -55,7 +55,8 @@ for it in \
  'git config user.name "foo"' \
  'git config user.email "foo@bar.org"'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "${it}"
- if test $? -ne 0; then echo 'Checkout error!'; exit 1; fi
+ if [[ $? -ne 0 ]]; then
+  echo "Exec of \"${it}\" error!"; exit 1; fi
 done
 
 for it in \
@@ -63,13 +64,17 @@ for it in \
  'gradle --version' \
  'mvn --version' \
  'gpg --version' \
+ 'cat ${ASSERTS_HOME}/LICENSE' \
+ 'cat ${ASSERTS_HOME}/README.md' \
  'cat ${MULTITOOL_HOME}/LICENSE' \
  'cat ${MULTITOOL_HOME}/README.md'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "${it}"
- if test $? -ne 0; then echo 'Exec error!'; exit 1; fi
+ if [[ $? -ne 0 ]]; then
+  echo "Exec of \"${it}\" error!"; exit 1; fi
 done
 
 for it in \
+ '$asserts/eq.sh "42" 1 1' \
  'gpg --batch --import /tmp/key.pgp' \
  'git config gpg.program "/usr/local/bin/gpgloopback.sh"' \
  'git config user.signingkey "${GPG_KEY_ID}"' \
@@ -89,7 +94,8 @@ for it in \
  '$mt/hashes/sha512.sh /tmp/foo.txt' \
  'cat /tmp/foo.txt.sha512 | xxd -p -c 128'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "${it}"
- if test $? -ne 0; then echo 'Exec error!'; exit 1; fi
+ if [[ $? -ne 0 ]]; then
+  echo "Exec of \"${it}\" error!"; exit 1; fi
 done
 
 docker stop "${CONTAINER_NAME}"
