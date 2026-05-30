@@ -13,7 +13,7 @@ env PATH="${PATH}:${MULTITOOL_HOME}"
 
 run mkdir .mt
 
-env ASSERTS_VERSION='0.0.8'
+env ASSERTS_VERSION='0.0.9'
 env ASSERTS_HOME="/opt/Asserts-${ASSERTS_VERSION}"
 env asserts="${ASSERTS_HOME}/src/main/bash"
 

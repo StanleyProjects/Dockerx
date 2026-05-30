@@ -8,7 +8,7 @@ NAMESPACE='kepocnhh'
 ISSUER='multitool'
 ISSUER_VERSION='0.14.0'
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION_CODE=2
+IMAGE_VERSION_CODE=3
 IMAGE_FLAVOR='a'
 IMAGE_TAG="${IMAGE_VERSION_CODE}${IMAGE_FLAVOR}"
 IMAGE_NAME="${HOST}/${NAMESPACE}/${REPOSITORY}:${IMAGE_TAG}"
@@ -74,7 +74,7 @@ for it in \
 done
 
 for it in \
- '$asserts/eq.sh "42" 1 1' \
+ '$asserts/strings/eq.sh "42" 1 1' \
  'gpg --batch --import /tmp/key.pgp' \
  'git config gpg.program "/usr/local/bin/gpgloopback.sh"' \
  'git config user.signingkey "${GPG_KEY_ID}"' \
