@@ -1,5 +1,5 @@
 /*
-!/amd64
-!/arm64
-!.gitignore
-!README.md
+!/amd64/
+!/arm64/
+!/.gitignore
+!/README.md
