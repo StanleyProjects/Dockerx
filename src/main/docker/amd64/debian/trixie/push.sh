@@ -8,7 +8,7 @@ ISSUER='debian'
 ISSUER_VERSION='trixie'
 ISSUER_PATH="${ARCH}/${ISSUER}/${ISSUER_VERSION}"
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION_CODE=1
+IMAGE_VERSION_CODE=12
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 IMAGE_TAG="${IMAGE_VERSION}-${IMAGE_FLAVOR}"
@@ -102,7 +102,7 @@ read -r YES_OR_NOT
 
 if [[ "${YES_OR_NOT}" == 'yes' ]]; then
  git tag "${REPOSITORY}/${IMAGE_TAG}" \
-  && git push --tag
+  && git push --tags
  if [[ $? -ne 0 ]]; then
   echo "Tag \"${REPOSITORY}/${IMAGE_TAG}\" push error!"; exit 1; fi
  git log --graph --all -2
