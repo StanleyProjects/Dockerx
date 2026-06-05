@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${ARCH}/${ISSUER}/${ISSUER_VERSION}"
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION_CODE=4
+IMAGE_VERSION_CODE=5
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 IMAGE_TAG="${IMAGE_VERSION}-${IMAGE_FLAVOR}"
@@ -78,6 +78,7 @@ if [[ $? -ne 0 ]]; then
 for it in \
  '$asserts/strings/eq.sh "42" 1 1' \
  '$asserts/files/not_empty.sh "${ASSERTS_HOME}/README.md"' \
+ '$asserts/files/contains.sh "${ASSERTS_HOME}/README.md" "Asserts"' \
  'gpg --batch --import /tmp/key.pgp' \
  'git config gpg.program "/usr/local/bin/gpgloopback.sh"' \
  'git config user.signingkey "${GPG_KEY_ID}"' \
