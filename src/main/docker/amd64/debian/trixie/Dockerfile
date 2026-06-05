@@ -1,4 +1,4 @@
-from docker.io/amd64/debian:trixie-20260505-slim
+from docker.io/amd64/debian:trixie-20260518-slim
 
 run echo 'deb http://deb.debian.org/debian trixie main' > /etc/apt/sources.list; \
  echo 'deb http://deb.debian.org/debian trixie-updates main' >> /etc/apt/sources.list; \
