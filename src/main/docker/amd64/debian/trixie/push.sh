@@ -49,6 +49,7 @@ for it in \
  'echo "foo" | openssl dgst -sha256 -binary | xxd -p -c 64' \
  'cat ./Dockerx/README.md' \
  'file --version' \
+ 'rg --version' \
  '/usr/local/bin/bash --version'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "$it"
  if [[ $? -ne 0 ]]; then

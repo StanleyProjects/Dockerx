@@ -49,4 +49,11 @@ run echo '#!/usr/local/bin/bash' > /usr/local/bin/gpgloopback.sh; \
 run apt-get install --no-install-recommends -y file \
  && file --version
 
-run echo 'a' > /etc/flavor
+env RIPGREP_VERSION='15.1.0'
+run curl -L "https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep_${RIPGREP_VERSION}-1_amd64.deb" \
+ -o "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
+ && apt-get install -y "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
+ && rm "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
+ && rg --version
+
+run printf '%s' 'a' > /etc/flavor
