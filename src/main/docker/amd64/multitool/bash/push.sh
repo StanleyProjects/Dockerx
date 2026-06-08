@@ -109,8 +109,6 @@ done
 docker stop "${DOCKERX_CONTAINER}"
 docker rm -f "${DOCKERX_CONTAINER}"
 
-docker inspect --format='{{index .RepoDigests 0}}' "${IMAGE_NAME}"
-
 echo 'Push to Docker repository?'
 read -r YES_OR_NOT
 
@@ -118,7 +116,10 @@ if [[ "${YES_OR_NOT}" == 'yes' ]]; then
  docker push "${IMAGE_NAME}"
  if [[ $? -ne 0 ]]; then
   echo 'Push error!'; exit 1; fi
- echo "Docker image ${IMAGE_NAME} pushed."
+ docker inspect --format='{{index .RepoDigests 0}}' "${IMAGE_NAME}"
+ if [[ $? -ne 0 ]]; then
+  echo 'Digest error!'; exit 1; fi
+ echo "Docker image \"${IMAGE_NAME}\" pushed."
 fi
 
 echo 'Push to GIT repository?'
