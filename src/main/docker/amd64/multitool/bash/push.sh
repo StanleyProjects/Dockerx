@@ -1,39 +1,40 @@
 #!/usr/local/bin/bash
 
-ARCH='amd64'
-PLATFORM="linux/${ARCH}"
-HOST='docker.io'
-NAMESPACE='kepocnhh'
+DOCKERX_ARCH='amd64'
+DOCKERX_PLATFORM="linux/${DOCKERX_ARCH}"
+DOCKERX_HOST='docker.io'
+DOCKERX_NAMESPACE='kepocnhh'
 ISSUER='multitool'
 ISSUER_VERSION='bash'
-ISSUER_PATH="${ARCH}/${ISSUER}/${ISSUER_VERSION}"
-REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
+ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
+DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
 IMAGE_VERSION_CODE=6
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
-IMAGE_TAG="${IMAGE_VERSION}-${IMAGE_FLAVOR}"
-IMAGE_NAME="${HOST}/${NAMESPACE}/${REPOSITORY}:${IMAGE_TAG}"
+DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
+DOCKERX_IMAGE_TAG="${IMAGE_VERSION}-${IMAGE_FLAVOR}"
+IMAGE_NAME="${DOCKERX_IMAGE}:${DOCKERX_IMAGE_TAG}"
 
 docker build --no-cache \
  -f "src/main/docker/${ISSUER_PATH}/Dockerfile" \
- --platform="${PLATFORM}" -t "${IMAGE_NAME}" .
+ --platform="${DOCKERX_PLATFORM}" -t "${IMAGE_NAME}" .
 
 if [[ $? -ne 0 ]]; then
  echo 'Docker build error!'; exit 1; fi
 
-CONTAINER_NAME="container.${REPOSITORY}"
+DOCKERX_CONTAINER="container.${DOCKERX_REPOSITORY}"
 
-docker stop "${CONTAINER_NAME}"
-docker rm -f "${CONTAINER_NAME}"
+docker stop "${DOCKERX_CONTAINER}"
+docker rm -f "${DOCKERX_CONTAINER}"
 
-docker run --platform="${PLATFORM}" \
+docker run --platform="${DOCKERX_PLATFORM}" \
  -e REPOSITORY_OWNER='StanleyProjects' \
  -e REPOSITORY_NAME='Useless.Bash' \
  -e SOURCE_COMMIT='7b01cb582cdc07af486a9dfca736a30f41559e42' \
  -e TARGET_BRANCH='unstable' \
  -e GPG_PASSWORD='qwer1234' \
  -e GPG_KEY_ID='2AC43613F5502EB3C490D2C62CFF9BD0725E548B' \
- -id --name "${CONTAINER_NAME}" "${IMAGE_NAME}"
+ -id --name "${DOCKERX_CONTAINER}" "${IMAGE_NAME}"
 
 if [[ $? -ne 0 ]]; then
  echo 'Run error!'; exit 1; fi
@@ -55,7 +56,7 @@ for it in \
  'cat ${ASSERTS_HOME}/README.md' \
  'cat ${MULTITOOL_HOME}/LICENSE' \
  'cat ${MULTITOOL_HOME}/README.md'; do
- docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "${it}"
+ docker exec "${DOCKERX_CONTAINER}" /usr/local/bin/bash -c "${it}"
  if [[ $? -ne 0 ]]; then
   echo "Exec of \"${it}\" error!"; exit 1; fi
 done
@@ -68,12 +69,12 @@ for it in \
  'git switch ${TARGET_BRANCH}' \
  'git config user.name "foo"' \
  'git config user.email "foo@bar.org"'; do
- docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "${it}"
+ docker exec "${DOCKERX_CONTAINER}" /usr/local/bin/bash -c "${it}"
  if [[ $? -ne 0 ]]; then
   echo "Exec of \"${it}\" error!"; exit 1; fi
 done
 
-docker cp 'src/main/res/key.pgp' "${CONTAINER_NAME}:/tmp/key.pgp"
+docker cp 'src/main/res/key.pgp' "${DOCKERX_CONTAINER}:/tmp/key.pgp"
 if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
@@ -100,13 +101,15 @@ for it in \
  'cat /tmp/foo.txt.sha256 | xxd -p -c 64' \
  '$mt/hashes/sha512.sh /tmp/foo.txt' \
  'cat /tmp/foo.txt.sha512 | xxd -p -c 128'; do
- docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "${it}"
+ docker exec "${DOCKERX_CONTAINER}" /usr/local/bin/bash -c "${it}"
  if [[ $? -ne 0 ]]; then
   echo "Exec of \"${it}\" error!"; exit 1; fi
 done
 
-docker stop "${CONTAINER_NAME}"
-docker rm -f "${CONTAINER_NAME}"
+docker stop "${DOCKERX_CONTAINER}"
+docker rm -f "${DOCKERX_CONTAINER}"
+
+docker inspect --format='{{index .RepoDigests 0}}' "${IMAGE_NAME}"
 
 echo 'Push to Docker repository?'
 read -r YES_OR_NOT
@@ -123,19 +126,19 @@ read -r YES_OR_NOT
 
 if [[ "${YES_OR_NOT}" == 'yes' ]]; then
  git add . \
-  && git commit -m "${REPOSITORY}:${IMAGE_TAG}" \
+  && git commit -m "${DOCKERX_REPOSITORY}:${DOCKERX_IMAGE_TAG}" \
   && git push
  if [[ $? -ne 0 ]]; then
   echo 'Commit push error!'; exit 1; fi
 fi
 
-echo "Push tag \"${REPOSITORY}/${IMAGE_TAG}\" to GIT repository?"
+echo "Push tag \"${DOCKERX_REPOSITORY}/${DOCKERX_IMAGE_TAG}\" to GIT repository?"
 read -r YES_OR_NOT
 
 if [[ "${YES_OR_NOT}" == 'yes' ]]; then
- git tag "${REPOSITORY}/${IMAGE_TAG}" \
+ git tag "${DOCKERX_REPOSITORY}/${DOCKERX_IMAGE_TAG}" \
   && git push --tags
  if [[ $? -ne 0 ]]; then
-  echo "Tag \"${REPOSITORY}/${IMAGE_TAG}\" push error!"; exit 1; fi
+  echo "Tag \"${DOCKERX_REPOSITORY}/${DOCKERX_IMAGE_TAG}\" push error!"; exit 1; fi
  git log --graph --all -2
 fi
