@@ -21,3 +21,11 @@ env asserts="${ASSERTS_HOME}/src/main/bash"
 run TMP_PATH="$(mktemp)"; \
  curl -L "https://github.com/StanleyProjects/Asserts/releases/download/${ASSERTS_VERSION}/Asserts-${ASSERTS_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Asserts-${ASSERTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+
+env MOCKS_VERSION='0.0.3'
+env MOCKS_HOME="/opt/Mocks-${MOCKS_VERSION}"
+env mocks="${MOCKS_HOME}/src/main/bash"
+
+run TMP_PATH="$(mktemp)"; \
+ curl -L "https://github.com/StanleyProjects/Mocks/releases/download/${MOCKS_VERSION}/Mocks-${MOCKS_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Mocks-${MOCKS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"

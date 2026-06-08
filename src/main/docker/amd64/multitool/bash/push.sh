@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${ARCH}/${ISSUER}/${ISSUER_VERSION}"
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION_CODE=5
+IMAGE_VERSION_CODE=6
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 IMAGE_TAG="${IMAGE_VERSION}-${IMAGE_FLAVOR}"
@@ -49,6 +49,8 @@ for it in \
  'yq --version' \
  'git --version' \
  'xxd --version' \
+ 'cat ${MOCKS_HOME}/LICENSE' \
+ 'cat ${MOCKS_HOME}/README.md' \
  'cat ${ASSERTS_HOME}/LICENSE' \
  'cat ${ASSERTS_HOME}/README.md' \
  'cat ${MULTITOOL_HOME}/LICENSE' \
@@ -76,6 +78,7 @@ if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
 for it in \
+ 'MOCKS_CURL_DST="foo" $mocks/curl/bin/curl' \
  '$asserts/strings/eq.sh "42" 1 1' \
  '$asserts/files/not_empty.sh "${ASSERTS_HOME}/README.md"' \
  '$asserts/files/contains.sh "${ASSERTS_HOME}/README.md" "Asserts"' \
