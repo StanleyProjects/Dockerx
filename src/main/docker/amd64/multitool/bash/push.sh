@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=8
+IMAGE_VERSION_CODE=9
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -50,6 +50,8 @@ for it in \
  'yq --version' \
  'git --version' \
  'xxd --version' \
+ 'cat ${CHECKS_HOME}/LICENSE' \
+ 'cat ${CHECKS_HOME}/README.md' \
  'cat ${MOCKS_HOME}/LICENSE' \
  'cat ${MOCKS_HOME}/README.md' \
  'cat ${ASSERTS_HOME}/LICENSE' \
@@ -80,6 +82,7 @@ if [[ $? -ne 0 ]]; then
 
 for it in \
  'MOCKS_CURL_DST="foo" $mocks/curl/bin/curl' \
+ '$checks/strings/eq.sh 1 1' \
  "\$asserts/files/equals.sh '/etc/flavor' '${IMAGE_FLAVOR}'" \
  '$asserts/strings/eq.sh "42" 1 1' \
  '$asserts/files/not_empty.sh "${ASSERTS_HOME}/README.md"' \

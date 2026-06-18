@@ -7,7 +7,7 @@ env MULTITOOL_HOME="/opt/Multitool-${MULTITOOL_VERSION}"
 env mt="${MULTITOOL_HOME}/src/main/bash"
 
 run TMP_PATH="$(mktemp)"; \
- curl -L "https://github.com/StanleyProjects/Multitool/releases/download/${MULTITOOL_VERSION}/Multitool-${MULTITOOL_VERSION}.zip" \
+ curl -m 8 -L "https://github.com/StanleyProjects/Multitool/releases/download/${MULTITOOL_VERSION}/Multitool-${MULTITOOL_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Multitool-${MULTITOOL_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
 env PATH="${PATH}:${MULTITOOL_HOME}"
@@ -19,7 +19,7 @@ env ASSERTS_HOME="/opt/Bashx.Asserts-${ASSERTS_VERSION}"
 env asserts="${ASSERTS_HOME}/src/main/bash"
 
 run TMP_PATH="$(mktemp)"; \
- curl -L "https://github.com/stanbashx/Bashx.Asserts/releases/download/${ASSERTS_VERSION}/Bashx.Asserts-${ASSERTS_VERSION}.zip" \
+ curl -m 8 -L "https://github.com/stanbashx/Bashx.Asserts/releases/download/${ASSERTS_VERSION}/Bashx.Asserts-${ASSERTS_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Asserts-${ASSERTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
 env MOCKS_VERSION='0.0.4'
@@ -27,5 +27,13 @@ env MOCKS_HOME="/opt/Bashx.Mocks-${MOCKS_VERSION}"
 env mocks="${MOCKS_HOME}/src/main/bash"
 
 run TMP_PATH="$(mktemp)"; \
- curl -L "https://github.com/stanbashx/Bashx.Mocks/releases/download/${MOCKS_VERSION}/Bashx.Mocks-${MOCKS_VERSION}.zip" \
+ curl -m 8 -L "https://github.com/stanbashx/Bashx.Mocks/releases/download/${MOCKS_VERSION}/Bashx.Mocks-${MOCKS_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Mocks-${MOCKS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+
+env CHECKS_VERSION='0.0.3'
+env CHECKS_HOME="/opt/Bashx.Checks-${CHECKS_VERSION}"
+env checks="${CHECKS_HOME}/src/main/bash"
+
+run TMP_PATH="$(mktemp)"; \
+ curl -m 8 -L "https://github.com/stanbashx/Bashx.Checks/releases/download/${CHECKS_VERSION}/Bashx.Checks-${CHECKS_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Checks-${CHECKS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
