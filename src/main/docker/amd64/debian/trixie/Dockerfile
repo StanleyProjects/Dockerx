@@ -1,4 +1,4 @@
-from docker.io/amd64/debian:trixie-20260518-slim
+from docker.io/amd64/debian:trixie-20260610-slim
 
 run echo 'deb http://deb.debian.org/debian trixie main' > /etc/apt/sources.list; \
  echo 'deb http://deb.debian.org/debian trixie-updates main' >> /etc/apt/sources.list; \
@@ -25,11 +25,11 @@ run apt-get install --no-install-recommends -y zip \
 run apt-get install --no-install-recommends -y xz-utils
 
 env YQ_VERSION='4.47.1'
-env PATH="${PATH}:/opt/yq-${YQ_VERSION}"
-run mkdir /opt/yq-${YQ_VERSION} && \
- curl -L https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64 \
-  -o /opt/yq-${YQ_VERSION}/yq \
- && chmod +x /opt/yq-${YQ_VERSION}/yq \
+env PATH="${PATH}:/opt/yq-${YQ_VERSION}/bin"
+run mkdir -p "/opt/yq-${YQ_VERSION}/bin" && \
+ curl -m 8 -L "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64" \
+  -o "/opt/yq-${YQ_VERSION}/bin/yq" \
+ && chmod +x "/opt/yq-${YQ_VERSION}/bin/yq" \
  && yq --version
 
 run apt-get install --no-install-recommends -y git \
