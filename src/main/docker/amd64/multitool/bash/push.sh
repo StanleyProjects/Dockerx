@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=6
+IMAGE_VERSION_CODE=7
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -80,6 +80,7 @@ if [[ $? -ne 0 ]]; then
 
 for it in \
  'MOCKS_CURL_DST="foo" $mocks/curl/bin/curl' \
+ "\$asserts/files/equals.sh '/etc/flavor' '${IMAGE_FLAVOR}'" \
  '$asserts/strings/eq.sh "42" 1 1' \
  '$asserts/files/not_empty.sh "${ASSERTS_HOME}/README.md"' \
  '$asserts/files/contains.sh "${ASSERTS_HOME}/README.md" "Asserts"' \

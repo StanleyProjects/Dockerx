@@ -1,4 +1,4 @@
-from docker.io/kepocnhh/debian-trixie-amd64:trixie-12-a
+from docker.io/kepocnhh/debian-trixie-amd64:trixie-13-a
 
 workdir /workdir
 
@@ -14,13 +14,13 @@ env PATH="${PATH}:${MULTITOOL_HOME}"
 
 run mkdir .mt
 
-env ASSERTS_VERSION='0.1.0'
-env ASSERTS_HOME="/opt/Asserts-${ASSERTS_VERSION}"
+env ASSERTS_VERSION='0.1.1'
+env ASSERTS_HOME="/opt/Bashx.Asserts-${ASSERTS_VERSION}"
 env asserts="${ASSERTS_HOME}/src/main/bash"
 
 run TMP_PATH="$(mktemp)"; \
- curl -L "https://github.com/StanleyProjects/Asserts/releases/download/${ASSERTS_VERSION}/Asserts-${ASSERTS_VERSION}.zip" \
- -o "${TMP_PATH}" && unzip -d "/opt/Asserts-${ASSERTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+ curl -L "https://github.com/stanbashx/Bashx.Asserts/releases/download/${ASSERTS_VERSION}/Bashx.Asserts-${ASSERTS_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Asserts-${ASSERTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
 env MOCKS_VERSION='0.0.3'
 env MOCKS_HOME="/opt/Mocks-${MOCKS_VERSION}"
