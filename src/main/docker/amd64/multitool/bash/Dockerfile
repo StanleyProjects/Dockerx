@@ -22,10 +22,10 @@ run TMP_PATH="$(mktemp)"; \
  curl -L "https://github.com/stanbashx/Bashx.Asserts/releases/download/${ASSERTS_VERSION}/Bashx.Asserts-${ASSERTS_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Asserts-${ASSERTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
-env MOCKS_VERSION='0.0.3'
-env MOCKS_HOME="/opt/Mocks-${MOCKS_VERSION}"
+env MOCKS_VERSION='0.0.4'
+env MOCKS_HOME="/opt/Bashx.Mocks-${MOCKS_VERSION}"
 env mocks="${MOCKS_HOME}/src/main/bash"
 
 run TMP_PATH="$(mktemp)"; \
- curl -L "https://github.com/StanleyProjects/Mocks/releases/download/${MOCKS_VERSION}/Mocks-${MOCKS_VERSION}.zip" \
- -o "${TMP_PATH}" && unzip -d "/opt/Mocks-${MOCKS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+ curl -L "https://github.com/stanbashx/Bashx.Mocks/releases/download/${MOCKS_VERSION}/Bashx.Mocks-${MOCKS_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Mocks-${MOCKS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
