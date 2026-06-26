@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=9
+IMAGE_VERSION_CODE=10
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -87,6 +87,8 @@ for it in \
  '$asserts/strings/eq.sh "42" 1 1' \
  '$asserts/files/not_empty.sh "${ASSERTS_HOME}/README.md"' \
  '$asserts/files/contains.sh "${ASSERTS_HOME}/README.md" "Asserts"' \
+ '$asserts/ints/eq.sh "42" 0 0' \
+ '$asserts/ints/ne.sh "42" 0 1' \
  'gpg --batch --import /tmp/key.pgp' \
  'git config gpg.program "/usr/local/bin/gpgloopback.sh"' \
  'git config user.signingkey "${GPG_KEY_ID}"' \
