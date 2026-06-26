@@ -22,7 +22,7 @@ run TMP_PATH="$(mktemp)"; \
  curl -m 8 -L "https://github.com/stanbashx/Bashx.Asserts/releases/download/${ASSERTS_VERSION}/Bashx.Asserts-${ASSERTS_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Asserts-${ASSERTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
-env MOCKS_VERSION='0.0.4'
+env MOCKS_VERSION='0.0.6'
 env MOCKS_HOME="/opt/Bashx.Mocks-${MOCKS_VERSION}"
 env mocks="${MOCKS_HOME}/src/main/bash"
 

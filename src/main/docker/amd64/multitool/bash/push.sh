@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=10
+IMAGE_VERSION_CODE=11
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -82,6 +82,7 @@ if [[ $? -ne 0 ]]; then
 
 for it in \
  'MOCKS_CURL_DST="foo" $mocks/curl/bin/curl' \
+ '[[ $(MOCKS_WC_EXIT_CODE=42 $mocks/wc/bin/wc; echo $?) -eq 42 ]]' \
  '$checks/strings/eq.sh 1 1' \
  "\$asserts/files/equals.sh '/etc/flavor' '${IMAGE_FLAVOR}'" \
  '$asserts/strings/eq.sh "42" 1 1' \
