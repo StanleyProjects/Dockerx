@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=12
+IMAGE_VERSION_CODE=13
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -50,6 +50,8 @@ for it in \
  'yq --version' \
  'git --version' \
  'xxd --version' \
+ 'cat ${GITHUBX_HOME}/LICENSE' \
+ 'cat ${GITHUBX_HOME}/README.md' \
  'cat ${CHECKS_HOME}/LICENSE' \
  'cat ${CHECKS_HOME}/README.md' \
  'cat ${MOCKS_HOME}/LICENSE' \
@@ -81,6 +83,7 @@ if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
 for it in \
+ '$ghx/rate_limit.sh /tmp/rate_limit.json' \
  'MOCKS_CURL_DST="foo" $mocks/curl/bin/curl' \
  '[[ $(MOCKS_WC_EXIT_CODE=42 $mocks/wc/bin/wc; echo $?) -eq 42 ]]' \
  '$checks/strings/eq.sh a a' \
