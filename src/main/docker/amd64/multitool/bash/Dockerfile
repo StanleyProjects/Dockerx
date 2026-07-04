@@ -30,7 +30,7 @@ run TMP_PATH="$(mktemp)"; \
  curl -m 8 -L "https://github.com/stanbashx/Bashx.Mocks/releases/download/${MOCKS_VERSION}/Bashx.Mocks-${MOCKS_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Mocks-${MOCKS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
-env CHECKS_VERSION='0.0.5'
+env CHECKS_VERSION='0.0.7'
 env CHECKS_HOME="/opt/Bashx.Checks-${CHECKS_VERSION}"
 env checks="${CHECKS_HOME}/src/main/bash"
 

@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=13
+IMAGE_VERSION_CODE=14
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -86,6 +86,7 @@ for it in \
  '$ghx/rate_limit.sh /tmp/rate_limit.json' \
  'MOCKS_CURL_DST="foo" $mocks/curl/bin/curl' \
  '[[ $(MOCKS_WC_EXIT_CODE=42 $mocks/wc/bin/wc; echo $?) -eq 42 ]]' \
+ '$checks/files/not_empty.sh "${CHECKS_HOME}/README.md"' \
  '$checks/strings/eq.sh a a' \
  '$checks/ints/eq.sh 1 1' \
  "\$asserts/files/equals.sh '/etc/flavor' '${IMAGE_FLAVOR}'" \
