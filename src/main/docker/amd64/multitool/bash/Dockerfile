@@ -38,7 +38,7 @@ run TMP_PATH="$(mktemp)"; \
  curl -m 8 -L "https://github.com/stanbashx/Bashx.Checks/releases/download/${CHECKS_VERSION}/Bashx.Checks-${CHECKS_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Checks-${CHECKS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
-env GITHUBX_VERSION='0.0.6'
+env GITHUBX_VERSION='0.0.8'
 env GITHUBX_HOME="/opt/Bashx.GitHubx-${GITHUBX_VERSION}"
 env ghx="${GITHUBX_HOME}/src/main/bash"
 

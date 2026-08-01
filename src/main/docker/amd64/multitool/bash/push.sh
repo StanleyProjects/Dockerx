@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=15
+IMAGE_VERSION_CODE=16
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -83,6 +83,7 @@ if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
 for it in \
+ '$ghx/commit.sh StanleyProjects Dockerx a30ce88ed5d1616237ff52b33a50e43c2d5ac9b3 $(mktemp -d)/response.json' \
  '$ghx/refs/not_exists.sh StanleyProjects Dockerx foobar' \
  '$ghx/rate_limit.sh /tmp/rate_limit.json' \
  'MOCKS_CURL_DST="foo" $mocks/curl/bin/curl' \
