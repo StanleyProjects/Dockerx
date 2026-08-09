@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=17
+IMAGE_VERSION_CODE=18
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -50,6 +50,8 @@ for it in \
  'yq --version' \
  'git --version' \
  'xxd --version' \
+ 'cat ${HASHES_HOME}/LICENSE' \
+ 'cat ${HASHES_HOME}/README.md' \
  'cat ${GITHUBX_HOME}/LICENSE' \
  'cat ${GITHUBX_HOME}/README.md' \
  'cat ${CHECKS_HOME}/LICENSE' \
@@ -83,6 +85,7 @@ if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
 for it in \
+ '$hashes/sha256.sh ${HASHES_HOME}/LICENSE /tmp/license.bin && test "$(stat -c %s /tmp/license.bin)" -eq 32' \
  '$ghx/releases/tags/not_exists.sh StanleyProjects Dockerx foobarbaz' \
  '$ghx/commit.sh StanleyProjects Dockerx a30ce88ed5d1616237ff52b33a50e43c2d5ac9b3 $(mktemp -d)/response.json' \
  '$ghx/refs/not_exists.sh StanleyProjects Dockerx foobar' \
