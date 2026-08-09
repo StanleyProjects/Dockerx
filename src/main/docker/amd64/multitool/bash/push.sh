@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=18
+IMAGE_VERSION_CODE=19
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -50,6 +50,8 @@ for it in \
  'yq --version' \
  'git --version' \
  'xxd --version' \
+ 'cat ${SECRETS_HOME}/LICENSE' \
+ 'cat ${SECRETS_HOME}/README.md' \
  'cat ${HASHES_HOME}/LICENSE' \
  'cat ${HASHES_HOME}/README.md' \
  'cat ${GITHUBX_HOME}/LICENSE' \
@@ -84,7 +86,17 @@ docker cp 'src/main/res/key.pgp' "${DOCKERX_CONTAINER}:/tmp/key.pgp"
 if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
+docker cp 'src/main/res/foo.key' "${DOCKERX_CONTAINER}:/tmp/foo.key"
+if [[ $? -ne 0 ]]; then
+ echo 'Copy error!'; exit 1; fi
+
+docker cp 'src/main/res/foo.pub' "${DOCKERX_CONTAINER}:/tmp/foo.pub"
+if [[ $? -ne 0 ]]; then
+ echo 'Copy error!'; exit 1; fi
+
 for it in \
+ 'DOCKERX_PASS=qwe123 $secrets/signing/sign.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/foo.key sha256 DOCKERX_PASS' \
+ '$secrets/signing/verify.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/foo.pub sha256' \
  '$hashes/sha256.sh ${HASHES_HOME}/LICENSE /tmp/license.bin && test "$(stat -c %s /tmp/license.bin)" -eq 32' \
  '$ghx/releases/tags/not_exists.sh StanleyProjects Dockerx foobarbaz' \
  '$ghx/commit.sh StanleyProjects Dockerx a30ce88ed5d1616237ff52b33a50e43c2d5ac9b3 $(mktemp -d)/response.json' \
