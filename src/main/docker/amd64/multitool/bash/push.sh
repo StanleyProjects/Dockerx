@@ -50,6 +50,8 @@ for it in \
  'yq --version' \
  'git --version' \
  'xxd --version' \
+ 'cat ${TGBOTS_HOME}/LICENSE' \
+ 'cat ${TGBOTS_HOME}/README.md' \
  'cat ${SECRETS_HOME}/LICENSE' \
  'cat ${SECRETS_HOME}/README.md' \
  'cat ${HASHES_HOME}/LICENSE' \
@@ -95,6 +97,7 @@ if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
 for it in \
+ '$checks/files/execs.sh $tgbots/get_me.sh' \
  'DOCKERX_PASS=qwe123 $secrets/signing/sign.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/foo.key sha256 DOCKERX_PASS' \
  '$secrets/signing/verify.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/foo.pub sha256' \
  '$hashes/sha256.sh ${HASHES_HOME}/LICENSE /tmp/license.bin && test "$(stat -c %s /tmp/license.bin)" -eq 32' \

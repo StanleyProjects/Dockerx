@@ -65,3 +65,11 @@ env ghx="${GITHUBX_HOME}/src/main/bash"
 run TMP_PATH="$(mktemp)"; \
  curl -m 8 -L "https://github.com/stanbashx/Bashx.GitHubx/releases/download/${GITHUBX_VERSION}/Bashx.GitHubx-${GITHUBX_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.GitHubx-${GITHUBX_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+
+env TGBOTS_VERSION='0.0.8'
+env TGBOTS_HOME="/opt/Bashx.TelegramBots-${TGBOTS_VERSION}"
+env tgbots="${TGBOTS_HOME}/src/main/bash"
+
+run TMP_PATH="$(mktemp)"; \
+ curl -m 8 -L "https://github.com/stanbashx/Bashx.TelegramBots/releases/download/${TGBOTS_VERSION}/Bashx.TelegramBots-${TGBOTS_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Bashx.TelegramBots-${TGBOTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
