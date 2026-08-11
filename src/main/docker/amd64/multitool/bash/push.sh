@@ -8,7 +8,7 @@ ISSUER='multitool'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=19
+IMAGE_VERSION_CODE=20
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -141,6 +141,25 @@ done
 
 docker stop "${DOCKERX_CONTAINER}"
 docker rm -f "${DOCKERX_CONTAINER}"
+
+GITHUBX_API='https://api.github.com'
+GITHUBX_API_VERSION='2026-03-10'
+GITHUBX_REF="tags/${DOCKERX_REPOSITORY}/${DOCKERX_IMAGE_TAG}"
+GITHUBX_REP_OWNER='StanleyProjects'
+GITHUBX_REP_NAME='Dockerx'
+HTTP_CODE=$(curl -m 8 -w '%{http_code}' \
+ "${GITHUBX_API}/repos/${GITHUBX_REP_OWNER}/${GITHUBX_REP_NAME}/git/ref/${GITHUBX_REF}" \
+ --header 'Accept: application/vnd.github+json' \
+ --header "X-GitHub-Api-Version: ${GITHUBX_API_VERSION}" \
+ -o /dev/null 2>/dev/null)
+
+if [[ $? -ne 0 ]]; then
+ echo 'Request error!' >&2; exit 1
+elif [[ "${HTTP_CODE}" == '200' ]]; then
+ echo "Ref \"${GITHUBX_REF}\" exists!" >&2; exit 1
+elif [[ "${HTTP_CODE}" != '404' ]]; then
+ echo 'Response error!' >&2; exit 1
+fi
 
 echo 'Push to Docker repository?'
 read -r YES_OR_NOT
