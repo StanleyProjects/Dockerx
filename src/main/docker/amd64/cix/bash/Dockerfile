@@ -50,7 +50,7 @@ run TMP_PATH="$(mktemp)"; \
 
 #
 
-env GITHUBX_VERSION='0.0.4'
+env GITHUBX_VERSION='0.0.9'
 env GITHUBX_HOME="/opt/Bashx.GitHubx-${GITHUBX_VERSION}"
 env ghx="${GITHUBX_HOME}/src/main/bash"
 
