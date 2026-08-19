@@ -8,7 +8,7 @@ ISSUER='cix'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=2
+IMAGE_VERSION_CODE=21
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -34,17 +34,24 @@ if [[ $? -ne 0 ]]; then
  echo 'Run error!'; exit 1; fi
 
 for it in \
- "test \"\$(cat /etc/flavor)\" == '${IMAGE_FLAVOR}'" \
- '/usr/local/bin/bash --version' \
- 'yq --version' \
- 'stat --version' \
- 'wc --version' \
- 'rg --version' \
+ "test \"\$(cat /etc/flavor)\" == \"${IMAGE_FLAVOR}\"" \
  'curl --version' \
- 'openssl version' \
- 'zip --version' \
+ 'file --version' \
  'git --version' \
+ 'gpg --version' \
+ 'openssl version' \
+ 'rg --version' \
  'xxd --version' \
+ 'yq --version' \
+ 'zip --version' \
+ 'cat ${CIX_HOME}/LICENSE' \
+ 'cat ${CIX_HOME}/README.md' \
+ 'cat ${TGBOTS_HOME}/LICENSE' \
+ 'cat ${TGBOTS_HOME}/README.md' \
+ 'cat ${SECRETS_HOME}/LICENSE' \
+ 'cat ${SECRETS_HOME}/README.md' \
+ 'cat ${HASHES_HOME}/LICENSE' \
+ 'cat ${HASHES_HOME}/README.md' \
  'cat ${GITHUBX_HOME}/LICENSE' \
  'cat ${GITHUBX_HOME}/README.md' \
  'cat ${CHECKS_HOME}/LICENSE' \
@@ -52,9 +59,28 @@ for it in \
  'cat ${MOCKS_HOME}/LICENSE' \
  'cat ${MOCKS_HOME}/README.md' \
  'cat ${ASSERTS_HOME}/LICENSE' \
- 'cat ${ASSERTS_HOME}/README.md' \
- 'cat ${CIX_HOME}/LICENSE' \
- 'cat ${CIX_HOME}/README.md'; do
+ 'cat ${ASSERTS_HOME}/README.md'; do
+ docker exec "${DOCKERX_CONTAINER}" /usr/local/bin/bash -c "${it}"
+ if [[ $? -ne 0 ]]; then
+  echo "Exec of \"${it}\" error!"; exit 1; fi
+done
+
+docker cp 'src/main/res/foo.key' "${DOCKERX_CONTAINER}:/tmp/foo.key"
+if [[ $? -ne 0 ]]; then
+ echo 'Copy error!'; exit 1; fi
+
+docker cp 'src/main/res/foo.pub' "${DOCKERX_CONTAINER}:/tmp/foo.pub"
+if [[ $? -ne 0 ]]; then
+ echo 'Copy error!'; exit 1; fi
+
+for it in \
+ 'DOCKERX_PASS=qwe123 $secrets/signing/sign.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/foo.key sha256 DOCKERX_PASS' \
+ '$secrets/signing/verify.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/foo.pub sha256' \
+ '$hashes/sha256.sh ${HASHES_HOME}/LICENSE /tmp/license.bin && test "$(stat -c %s /tmp/license.bin)" -eq 32' \
+ '$ghx/rate_limit.sh /tmp/rate_limit.json' \
+ '[[ $(MOCKS_WC_EXIT_CODE=42 $mocks/wc/bin/wc; echo $?) -eq 42 ]]' \
+ '$checks/ints/eq.sh 0 0' \
+ '$asserts/ints/eq.sh "42" 0 0'; do
  docker exec "${DOCKERX_CONTAINER}" /usr/local/bin/bash -c "${it}"
  if [[ $? -ne 0 ]]; then
   echo "Exec of \"${it}\" error!"; exit 1; fi

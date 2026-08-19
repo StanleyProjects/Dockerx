@@ -32,6 +32,24 @@ run TMP_PATH="$(mktemp)"; \
 
 #
 
+env HASHES_VERSION='0.0.1'
+env HASHES_HOME="/opt/Bashx.Hashes-${HASHES_VERSION}"
+env hashes="${HASHES_HOME}/src/main/bash"
+
+run TMP_PATH="$(mktemp)"; \
+ curl -m 8 -L "https://github.com/stanbashx/Bashx.Hashes/releases/download/${HASHES_VERSION}/Bashx.Hashes-${HASHES_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Hashes-${HASHES_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+
+env SECRETS_VERSION='0.0.1'
+env SECRETS_HOME="/opt/Bashx.Secrets-${SECRETS_VERSION}"
+env secrets="${SECRETS_HOME}/src/main/bash"
+
+run TMP_PATH="$(mktemp)"; \
+ curl -m 8 -L "https://github.com/stanbashx/Bashx.Secrets/releases/download/${SECRETS_VERSION}/Bashx.Secrets-${SECRETS_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Secrets-${SECRETS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+
+#
+
 env GITHUBX_VERSION='0.0.4'
 env GITHUBX_HOME="/opt/Bashx.GitHubx-${GITHUBX_VERSION}"
 env ghx="${GITHUBX_HOME}/src/main/bash"
@@ -39,6 +57,14 @@ env ghx="${GITHUBX_HOME}/src/main/bash"
 run TMP_PATH="$(mktemp)"; \
  curl -m 8 -L "https://github.com/stanbashx/Bashx.GitHubx/releases/download/${GITHUBX_VERSION}/Bashx.GitHubx-${GITHUBX_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.GitHubx-${GITHUBX_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+
+env TGBOTS_VERSION='0.0.8'
+env TGBOTS_HOME="/opt/Bashx.TelegramBots-${TGBOTS_VERSION}"
+env tgbots="${TGBOTS_HOME}/src/main/bash"
+
+run TMP_PATH="$(mktemp)"; \
+ curl -m 8 -L "https://github.com/stanbashx/Bashx.TelegramBots/releases/download/${TGBOTS_VERSION}/Bashx.TelegramBots-${TGBOTS_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/Bashx.TelegramBots-${TGBOTS_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
 #
 
@@ -54,6 +80,6 @@ env CIX_VERSION='0.0.1-UNSTABLE'
 env CIX_HOME="/opt/CIx-${CIX_VERSION}"
 env cix="${CIX_HOME}/src/main/bash"
 
-run mkdir "${CIX_HOME}" \
- && curl -m 8 -L "https://github.com/stancix/CIx/archive/faf5d0c0e72fe04b1035c9320a99827c0f3edd79.tar.gz" \
- | tar -xzf - --strip-components=1 -C "${CIX_HOME}"
+run TMP_PATH="$(mktemp)"; \
+ curl -m 8 -L "https://github.com/stancix/CIx/releases/download/${CIX_VERSION}/CIx-${CIX_VERSION}.zip" \
+ -o "${TMP_PATH}" && unzip -d "/opt/CIx-${CIX_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
