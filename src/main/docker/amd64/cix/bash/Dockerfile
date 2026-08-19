@@ -76,7 +76,7 @@ run mkdir -p "${CIX_WORKDIR}" \
 
 workdir /.cix/workdir
 
-env CIX_VERSION='0.0.5-UNSTABLE'
+env CIX_VERSION='0.0.6-UNSTABLE'
 env CIX_HOME="/opt/CIx-${CIX_VERSION}"
 env cix="${CIX_HOME}/src/main/bash"
 
