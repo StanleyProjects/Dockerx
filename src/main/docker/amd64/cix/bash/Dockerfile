@@ -40,7 +40,7 @@ run TMP_PATH="$(mktemp)"; \
  curl -m 8 -L "https://github.com/stanbashx/Bashx.Hashes/releases/download/${HASHES_VERSION}/Bashx.Hashes-${HASHES_VERSION}.zip" \
  -o "${TMP_PATH}" && unzip -d "/opt/Bashx.Hashes-${HASHES_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
 
-env SECRETS_VERSION='0.0.1'
+env SECRETS_VERSION='0.0.3'
 env SECRETS_HOME="/opt/Bashx.Secrets-${SECRETS_VERSION}"
 env secrets="${SECRETS_HOME}/src/main/bash"
 

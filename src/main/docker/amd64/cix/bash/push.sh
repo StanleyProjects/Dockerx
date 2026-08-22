@@ -8,7 +8,7 @@ ISSUER='cix'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=34
+IMAGE_VERSION_CODE=35
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -65,18 +65,15 @@ for it in \
   echo "Exec of \"${it}\" error!"; exit 1; fi
 done
 
-docker cp 'src/main/res/foo.key' "${DOCKERX_CONTAINER}:/tmp/foo.key"
-if [[ $? -ne 0 ]]; then
- echo 'Copy error!'; exit 1; fi
-
-docker cp 'src/main/res/foo.pub' "${DOCKERX_CONTAINER}:/tmp/foo.pub"
+docker cp 'src/main/res/' "${DOCKERX_CONTAINER}:/tmp/res/"
 if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
 for it in \
+ 'SECRETS_SRC_PASSWORD="qwe123" $secrets/pkcs12/key.sh /tmp/res/foo.pkcs12 /tmp/foo.key SECRETS_SRC_PASSWORD && rm /tmp/foo.key' \
  '$checks/strings/any.sh 3 0 1 2 3 4' \
- 'DOCKERX_PASS=qwe123 $secrets/signing/sign.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/foo.key sha256 DOCKERX_PASS' \
- '$secrets/signing/verify.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/foo.pub sha256' \
+ 'DOCKERX_PASS=qwe123 $secrets/signing/sign.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/res/foo.key sha256 DOCKERX_PASS' \
+ '$secrets/signing/verify.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/res/foo.pub sha256' \
  '$hashes/sha256.sh ${HASHES_HOME}/LICENSE /tmp/license.bin && test "$(stat -c %s /tmp/license.bin)" -eq 32' \
  '$ghx/rate_limit.sh /tmp/rate_limit.json' \
  '[[ $(MOCKS_WC_EXIT_CODE=42 $mocks/wc/bin/wc; echo $?) -eq 42 ]]' \
