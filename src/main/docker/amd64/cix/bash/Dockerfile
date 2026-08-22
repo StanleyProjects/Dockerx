@@ -22,7 +22,7 @@ run TMP_PATH="$(mktemp)"; \
 
 #
 
-env CHECKS_VERSION='0.0.7'
+env CHECKS_VERSION='0.0.8'
 env CHECKS_HOME="/opt/Bashx.Checks-${CHECKS_VERSION}"
 env checks="${CHECKS_HOME}/src/main/bash"
 
