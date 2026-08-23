@@ -8,7 +8,7 @@ ISSUER='cix'
 ISSUER_VERSION='bash'
 ISSUER_PATH="${DOCKERX_ARCH}/${ISSUER}/${ISSUER_VERSION}"
 DOCKERX_REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${DOCKERX_ARCH}"
-IMAGE_VERSION_CODE=36
+IMAGE_VERSION_CODE=37
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
@@ -70,6 +70,7 @@ if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
 for it in \
+ '$ghx/pages/file.sh stanuseless debug-public.pem /tmp/stanuseless.pem' \
  'SECRETS_SRC_PASSWORD="qwe123" $secrets/pkcs12/key.sh /tmp/res/foo.pkcs12 /tmp/foo.key SECRETS_SRC_PASSWORD && rm /tmp/foo.key' \
  '$checks/strings/any.sh 3 0 1 2 3 4' \
  'DOCKERX_PASS=qwe123 $secrets/signing/sign.sh ${SECRETS_HOME}/LICENSE ${SECRETS_HOME}/LICENSE.sig /tmp/res/foo.key sha256 DOCKERX_PASS' \
