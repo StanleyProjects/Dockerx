@@ -8,7 +8,7 @@ ISSUER='debian'
 ISSUER_VERSION='trixie'
 ISSUER_PATH="${ARCH}/${ISSUER}/${ISSUER_VERSION}"
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
-IMAGE_VERSION_CODE=13
+IMAGE_VERSION_CODE=14
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
 IMAGE_FLAVOR='a'
 IMAGE_TAG="${IMAGE_VERSION}-${IMAGE_FLAVOR}"
@@ -37,6 +37,7 @@ if [[ $? -ne 0 ]]; then
  echo 'Copy error!'; exit 1; fi
 
 for it in \
+ '[[ ! -e /etc/apt/sources.list.d/debian.sources ]]' \
  "test \"\$(cat /etc/flavor)\" == \"${IMAGE_FLAVOR}\"" \
  'cat /etc/apt/sources.list' \
  'curl --version' \
