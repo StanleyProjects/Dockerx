@@ -55,11 +55,11 @@ run mkdir -p "/opt/yq-${YQ_VERSION}/bin" && \
  && chmod +x "/opt/yq-${YQ_VERSION}/bin/yq" \
  && yq --version
 
-env RIPGREP_VERSION='15.1.0'
+env RIPGREP_VERSION='15.2.0'
 run curl -m 16 -L "https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep_${RIPGREP_VERSION}-1_amd64.deb" \
  -o "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
  && apt-get install -y "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
  && rm "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
  && rg --version
 
-run printf '%s' 'b' > /etc/flavor
+run printf '%s' 'c' > /etc/flavor
