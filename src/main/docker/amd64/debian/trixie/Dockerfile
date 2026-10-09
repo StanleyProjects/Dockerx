@@ -47,7 +47,7 @@ run printf '%s\n' '#!/usr/local/bin/bash' \
  > /usr/local/bin/gpgloopback.sh \
  && chmod +x /usr/local/bin/gpgloopback.sh
 
-env YQ_VERSION='4.47.1'
+env YQ_VERSION='4.54.1'
 env PATH="${PATH}:/opt/yq-${YQ_VERSION}/bin"
 run mkdir -p "/opt/yq-${YQ_VERSION}/bin" && \
  curl -m 16 -L "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64" \
@@ -62,4 +62,4 @@ run curl -m 16 -L "https://github.com/BurntSushi/ripgrep/releases/download/${RIP
  && rm "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
  && rg --version
 
-run printf '%s' 'a' > /etc/flavor
+run printf '%s' 'b' > /etc/flavor
