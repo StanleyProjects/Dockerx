@@ -1,4 +1,4 @@
-from docker.io/kepocnhh/debian-trixie-amd64:trixie-13-a
+from docker.io/kepocnhh/debian-trixie-amd64:trixie-14-c
 
 #
 
