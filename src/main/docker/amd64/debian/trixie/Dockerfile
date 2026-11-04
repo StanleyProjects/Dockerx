@@ -1,4 +1,4 @@
-from docker.io/amd64/debian:trixie-20261005-slim
+from docker.io/amd64/debian:trixie-20261027-slim
 
 run rm '/etc/apt/sources.list.d/debian.sources'
 
