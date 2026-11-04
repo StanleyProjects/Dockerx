@@ -13,7 +13,7 @@ DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
 DOCKERX_IMAGE_TAG="${DOCKERX_IMAGE_VERSION}-${DOCKERX_IMAGE_FLAVOR}"
 DOCKERX_IMAGE_NAME="${DOCKERX_IMAGE}:${DOCKERX_IMAGE_TAG}"
 
-docker build --progress=plain \
+docker build --no-cache \
  -f "src/main/docker/${DOCKERX_SUBJECT_PATH}/Dockerfile" \
  --platform="${DOCKERX_PLATFORM}" -t "${DOCKERX_IMAGE_NAME}" .
 
@@ -33,6 +33,8 @@ if [[ $? -ne 0 ]]; then
 
 for it in \
  "test \"\$(cat /etc/flavor)\" == \"${DOCKERX_IMAGE_FLAVOR}\"" \
+ 'codex --version' \
+ 'goose --version' \
  ; do docker exec "${DOCKERX_CONTAINER}" /usr/local/bin/bash -c "${it}"
  if [[ $? -ne 0 ]]; then echo "Exec of \"${it}\" error!"; exit 1; fi
 done
