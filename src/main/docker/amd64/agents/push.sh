@@ -13,7 +13,7 @@ DOCKERX_IMAGE="${DOCKERX_HOST}/${DOCKERX_NAMESPACE}/${DOCKERX_REPOSITORY}"
 DOCKERX_IMAGE_TAG="${DOCKERX_IMAGE_VERSION}-${DOCKERX_IMAGE_FLAVOR}"
 DOCKERX_IMAGE_NAME="${DOCKERX_IMAGE}:${DOCKERX_IMAGE_TAG}"
 
-docker build --no-cache --progress=plain \
+docker build --progress=plain \
  -f "src/main/docker/${DOCKERX_SUBJECT_PATH}/Dockerfile" \
  --platform="${DOCKERX_PLATFORM}" -t "${DOCKERX_IMAGE_NAME}" .
 

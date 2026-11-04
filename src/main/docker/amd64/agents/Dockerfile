@@ -11,4 +11,12 @@ run mkdir "/opt/codex-${CODEX_VERSION}" && TMP_PATH="$(mktemp)" && curl -m 32 -f
 
 #
 
-run echo 'Not implemented!'; exit 1
+env GOOSE_VERSION='1.57.0'
+env GOOSE_HOME="/opt/goose-${GOOSE_VERSION}"
+env PATH="${GOOSE_HOME}/bin:${PATH}"
+run mkdir -p "${GOOSE_HOME}/bin" && TMP_PATH="$(mktemp)" && curl -m 32 -f \
+  -L "https://github.com/aaif-goose/goose/releases/download/v${GOOSE_VERSION}/goose-x86_64-unknown-linux-gnu.tar.gz" \
+  -o "${TMP_PATH}" && tar -xf "${TMP_PATH}" -C "${GOOSE_HOME}/bin/" \
+ && goose --version
+
+#
