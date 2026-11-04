@@ -62,4 +62,4 @@ run curl -m 16 -L "https://github.com/BurntSushi/ripgrep/releases/download/${RIP
  && rm "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
  && rg --version
 
-run printf '%s' 'c' > /etc/flavor
+run printf '%s' 'a' > /etc/flavor

@@ -55,7 +55,7 @@ for it in \
  '/usr/local/bin/bash --version'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "$it"
  if [[ $? -ne 0 ]]; then
-  echo 'Exec error!'; exit 1; fi
+  echo "Exec $it error!"; exit 1; fi
 done
 
 for it in \
