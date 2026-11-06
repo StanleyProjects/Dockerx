@@ -35,8 +35,14 @@ run apt-get install --no-install-recommends -y xxd \
 run apt-get install --no-install-recommends -y file \
  && file --version
 
+run apt-get install --no-install-recommends -y socat \
+ && socat -V \
+ && rm -rf '/var/lib/apt/lists/'
+
 run ln -s /bin/bash /usr/local/bin/bash \
  && /usr/local/bin/bash --version
+
+shell ["/usr/local/bin/bash", "-c"]
 
 run printf '%s\n' '#!/usr/local/bin/bash' \
  'GPG_ARGS=()' \
@@ -62,4 +68,22 @@ run curl -m 16 -L "https://github.com/BurntSushi/ripgrep/releases/download/${RIP
  && rm "/tmp/ripgrep-${RIPGREP_VERSION}.deb" \
  && rg --version
 
-run printf '%s' 'a' > /etc/flavor
+#
+
+run printf '%s\n' '#!/usr/local/bin/bash' \
+ 'SOCAT_ADDRESS="${SOCAT_ADDRESS:-host.docker.internal}"' \
+ 'SOCAT_PORT="${SOCAT_PORT:-2081}"' \
+ 'exec /usr/bin/socat "UNIX-LISTEN:${SOCAT_SOCKET},fork,mode=0600,unlink-early" "TCP4:${SOCAT_ADDRESS}:${SOCAT_PORT}"' \
+ > /usr/local/bin/socat_isolate.sh \
+ && chmod +x /usr/local/bin/socat_isolate.sh
+
+run printf '%s\n' '#!/usr/local/bin/bash' \
+ 'SOCAT_ADDRESS="${SOCAT_ADDRESS:-127.0.0.1}"' \
+ 'SOCAT_PORT="${SOCAT_PORT:-2081}"' \
+ 'exec /usr/bin/socat "TCP4-LISTEN:${SOCAT_PORT},bind=${SOCAT_ADDRESS},reuseaddr,fork" "UNIX-CONNECT:${SOCAT_SOCKET}"' \
+ > /usr/local/bin/socat_connect.sh \
+ && chmod +x /usr/local/bin/socat_connect.sh
+
+#
+
+run printf '%s' 'c' > /etc/flavor

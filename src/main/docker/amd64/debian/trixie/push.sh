@@ -10,7 +10,7 @@ ISSUER_PATH="${ARCH}/${ISSUER}/${ISSUER_VERSION}"
 REPOSITORY="${ISSUER}-${ISSUER_VERSION}-${ARCH}"
 IMAGE_VERSION_CODE=15
 IMAGE_VERSION="${ISSUER_VERSION}-${IMAGE_VERSION_CODE}"
-IMAGE_FLAVOR='a'
+IMAGE_FLAVOR='c'
 IMAGE_TAG="${IMAGE_VERSION}-${IMAGE_FLAVOR}"
 IMAGE_NAME="${HOST}/${NAMESPACE}/${REPOSITORY}:${IMAGE_TAG}"
 
@@ -52,6 +52,7 @@ for it in \
  'cat ./Dockerx/README.md' \
  'file --version' \
  'rg --version' \
+ 'socat -V' \
  '/usr/local/bin/bash --version'; do
  docker exec "${CONTAINER_NAME}" /usr/local/bin/bash -c "$it"
  if [[ $? -ne 0 ]]; then
