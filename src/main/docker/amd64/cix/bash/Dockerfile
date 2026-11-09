@@ -1,4 +1,4 @@
-from docker.io/kepocnhh/debian-trixie-amd64:trixie-14-c
+from docker.io/kepocnhh/debian-trixie-amd64:trixie-15-c
 
 #
 
@@ -76,10 +76,11 @@ run mkdir -p "${CIX_WORKDIR}" \
 
 workdir /.cix/workdir
 
-env CIX_VERSION='0.2.0-UNSTABLE'
+env CIX_VERSION='0.2.1-UNSTABLE'
 env CIX_HOME="/opt/CIx-${CIX_VERSION}"
 env cix="${CIX_HOME}/src/main/bash"
 
-run TMP_PATH="$(mktemp)"; \
- curl -m 8 -L "https://github.com/stancix/CIx/releases/download/${CIX_VERSION}/CIx-${CIX_VERSION}.zip" \
- -o "${TMP_PATH}" && unzip -d "/opt/CIx-${CIX_VERSION}" "${TMP_PATH}" && rm "${TMP_PATH}"
+run TMP_PATH="$(mktemp)" \
+ && curl -m 32 -f -L "https://github.com/stancix/CIx/releases/download/${CIX_VERSION}/CIx-${CIX_VERSION}.tar.gz" -o "${TMP_PATH}" \
+ && mkdir "${CIX_HOME}" \
+ && tar -xf "${TMP_PATH}" -C "${CIX_HOME}" && rm "${TMP_PATH}"
